@@ -14,22 +14,21 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts ("The students of Villains Academy").center(50)
+  puts ("-------------").center(50)
 end
 
 def print(students)
   count = 0
   while count < students.count
-    puts "#{students[count][:name]} (#{students[count][:cohort]} cohort)"
-    #note: [count] retrieves the value of local variable 'count' as a string. 
+    puts ("#{students[count][:name]} (#{students[count][:cohort]} cohort)").center(50)
     count = count + 1
   end
 end
 
 def print_footer(students)
   count = students.count
-  puts "Overall, we have #{count} great #{count == 1 ? "student" : "students"}"
+  puts ("Overall, we have #{count} great #{count == 1 ? "student" : "students"}").center(50)
 end
 
 students = input_students
