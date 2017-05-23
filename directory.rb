@@ -4,11 +4,7 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
-    puts "Now enter their height:"
-    height = gets.chomp
-    puts "Enter their date of birth (dd/mm/yy):"
-    d_o_b = gets.chomp
-    students << {name: name, height: height, d_o_b: d_o_b, cohort: :november}
+    students << {name: name, cohort: :november}
     puts "Now we have #{students.count} #{students.count == 1 ? "student" : "students"}"
     puts "Please enter next students name"
     puts "To finish, just hit return"
@@ -23,9 +19,12 @@ def print_header
 end
 
 def print(students)
-    students.each_with_index do |student, index|
-            puts "#{index + 1}. #{student[:name]}, #{student[:height]}, #{student[:d_o_b]} (#{student[:cohort]} cohort)"
-    end
+  count = 0
+  while count < students.count
+    puts "#{students[count][:name]} (#{students[count][:cohort]} cohort)"
+    #note: [count] retrieves the value of local variable 'count' as a string. 
+    count = count + 1
+  end
 end
 
 def print_footer(students)
