@@ -17,15 +17,11 @@ def print_header
 end
 
 def print(students)
-puts "Enter the starting letter of students you wish to display:"
-    puts "Hit enter twice to display all students"
-    letter = gets.chomp
-
     students.each_with_index do |student, index|
-        if student[:name][0].downcase == letter.downcase
-            puts "#{student[:name]} (#{student[:cohort]} cohort)"
-        elsif letter == ""
+        if student[:name].length < 12
             puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+        else
+          puts ""
         end
     end
 end
