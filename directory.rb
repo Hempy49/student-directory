@@ -8,9 +8,6 @@ def input_students
   while !name.empty? do
     puts "Now enter their cohort:"
     cohort = gets.chomp
-    if cohort.empty?
-      cohort = "November"
-    end
     if !months.include? cohort
       puts "Cohort not found. Options are #{months}"
     else
@@ -31,21 +28,15 @@ def print_header
 end
 
 def print(students)
-    cohorts = []
-    students.map do |student|
-      cohorts << student[:cohort]
-    end
-    cohorts.sort!
-    empty_cohort = ""
-    cohorts.each do |cohort|
-    if cohort != empty_cohort
+    if !students.empty?
+    print_header
     students.each do |student|
-      if student[:cohort] == cohort
-            puts "#{student[:name]}, (#{student[:cohort]} cohort)"
-        end
-      end
+    puts "#{student[:name]}, (#{student[:cohort]} cohort)"
+  end
+  if students.empty?
+    puts ""
     end
-    empty_cohort = cohort
+    print_footer(students)
   end
 end
 
@@ -55,6 +46,4 @@ def print_footer(students)
 end
 
 students = input_students
-print_header
 print(students)
-print_footer(students)
