@@ -3,11 +3,14 @@ def input_students
   puts "To finish, just hit return"
   students = []
   months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  name = gets.chomp 
+  name = gets.chomp
 
   while !name.empty? do
     puts "Now enter their cohort:"
     cohort = gets.chomp
+    if cohort.empty?
+      cohort = "November"
+    end
     if !months.include? cohort
       puts "Cohort not found. Options are #{months}"
     else
@@ -28,9 +31,22 @@ def print_header
 end
 
 def print(students)
-    students.each_with_index do |student, index|
-            puts "#{index + 1}. #{student[:name]}, (#{student[:cohort]} cohort)"
+    cohorts = []
+    students.map do |student|
+      cohorts << student[:cohort]
     end
+    cohorts.sort!
+    empty_cohort = ""
+    cohorts.each do |cohort|
+    if cohort != empty_cohort
+    students.each do |student|
+      if student[:cohort] == cohort
+            puts "#{student[:name]}, (#{student[:cohort]} cohort)"
+        end
+      end
+    end
+    empty_cohort = cohort
+  end
 end
 
 def print_footer(students)
