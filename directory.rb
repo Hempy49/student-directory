@@ -3,11 +3,11 @@ def input_students
   puts "To finish, just hit return"
   students = []
   months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  name = gets.chomp
+  name = gets.delete! "\n"
 
   while !name.empty? do
     puts "Now enter their cohort:"
-    cohort = gets.chomp
+    cohort = gets.delete! "\n"
     if !months.include? cohort
       puts "Cohort not found. Options are #{months}"
     else
