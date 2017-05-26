@@ -26,6 +26,7 @@ def process(selection)
   when "4"
     load_students
   when "9"
+    puts "Program exited"
     exit
   else
     puts "I don't know what you meant, try again"
@@ -41,6 +42,8 @@ def input_students
     puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}"
     name = STDIN.gets.chomp
   end
+  puts "Students added successfully"
+  puts "-------------"
 end
 
 def show_students
@@ -63,6 +66,7 @@ end
 def print_footer
   count = @students.count
   puts "Overall, we have #{count} great #{count == 1 ? "student" : "students"}"
+  puts "-------------"
 end
 
 
@@ -74,6 +78,8 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "List saved to students.csv"
+  puts "-------------"
 end
 
 def load_students(filename = "students.csv")
@@ -83,6 +89,8 @@ def load_students(filename = "students.csv")
     @students << {name: name, cohort: cohort.to_sym}
   end
 file.close
+puts "List loaded from file"
+puts "-------------"
 end
 
 def try_load_students
