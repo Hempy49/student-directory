@@ -35,16 +35,21 @@ def process(selection)
 end
 
 def input_students
-  puts "Please enter the name of the student"
-  puts "To finish, just hit return twice"
-  name = STDIN.gets.chomp
+  name = student_name
   while !name.empty? do
+    make_array(name, "november")
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}"
-    name = STDIN.gets.chomp
+    name = student_name
   end
   puts "Students added successfully"
   puts "-------------"
+end
+
+def student_name
+  puts "Please enter the name of the student"
+  puts "To finish, just hit return twice"
+  name = STDIN.gets.chomp
 end
 
 def show_students
@@ -87,7 +92,7 @@ def load_students
   file = File.open(@filename,"r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    make_array(name, cohort)
   end
 file.close
 puts "List loaded from file"
@@ -95,16 +100,20 @@ puts "-------------"
 end
 
 def try_load_students
-  unless ARGV.first.nil?
-    @filename = ARGV.first
-  end
-  if File.exists?(@filename)
+    filename = ARGV.first
+  if filename.nil?
     load_students
+  elsif File.exists?(filename)
+    load_students(filename)
     puts "Loaded #{@students.count} from #{@filename}"
   else
     puts "Sorry, #{@filename} doesn't exist"
     exit
   end
+end
+
+def make_array(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 try_load_students
