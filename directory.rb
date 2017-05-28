@@ -38,7 +38,6 @@ def input_students
   name = student_name
   while !name.empty? do
     make_array(name, "november")
-    @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}"
     name = student_name
   end
@@ -77,24 +76,24 @@ end
 
 
 def save_students
-  file = File.open(@filename, "w")
+  File.open(@filename, "w") do |f|
   @students.each do |student|
     student_data = [student[:name]], student[:cohort]
     csv_line = student_data.join(",")
-    file.puts csv_line
+    f.puts csv_line
   end
-  file.close
+end
   puts "List saved to #{@filename}"
   puts "-------------"
 end
 
 def load_students
-  file = File.open(@filename,"r")
-  file.readlines.each do |line|
+  File.open(@filename,"r") do |f|
+  f.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     make_array(name, cohort)
   end
-file.close
+end
 puts "List loaded from file"
 puts "-------------"
 end
@@ -113,7 +112,7 @@ def try_load_students
 end
 
 def make_array(name, cohort)
-  @students << {name: name, cohort: cohort.to_sym}
+ @students << {name: name, cohort: cohort.to_sym}
 end
 
 try_load_students
