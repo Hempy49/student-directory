@@ -1,10 +1,11 @@
 @students = []
+@filename = "students.csv"
 
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to file"
+  puts "4. Load the list from file"
   puts "9. Exit"
 end
 
@@ -71,19 +72,19 @@ end
 
 
 def save_students
-  file = File.open("students.csv", "w")
+  file = File.open(@filename, "w")
   @students.each do |student|
     student_data = [student[:name]], student[:cohort]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
-  puts "List saved to students.csv"
+  puts "List saved to #{@filename}"
   puts "-------------"
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename,"r")
+def load_students
+  file = File.open(@filename,"r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -94,13 +95,14 @@ puts "-------------"
 end
 
 def try_load_students
-  filename = ARGV.first
-  return if filename.nil?
-  if File.exists?(filename)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+  unless ARGV.first.nil?
+    @filename = ARGV.first
+  end
+  if File.exists?(@filename)
+    load_students
+    puts "Loaded #{@students.count} from #{@filename}"
   else
-    puts "Sorry, #{filename} doesn't exist"
+    puts "Sorry, #{@filename} doesn't exist"
     exit
   end
 end
